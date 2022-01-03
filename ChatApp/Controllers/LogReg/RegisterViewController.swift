@@ -6,9 +6,11 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
+import FirebaseAuth
+import JGProgressHUD
 class RegisterViewController: UIViewController {
-
+    private let spinner = JGProgressHUD(style:.dark)
     @IBOutlet weak var passOutlet: UITextField!
     @IBOutlet weak var EmailOutlet: UITextField!
     @IBOutlet weak var LName: UITextField!
@@ -26,10 +28,54 @@ class RegisterViewController: UIViewController {
       
     }
     @IBAction func RegisterButnPressed(_ sender: UIButton) {
+        if let email = EmailOutlet.text {
+            spinner.show(in: view)
+        DatabaseManger.shared.userExists(with:email) { isExist in
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+            }
+            if isExist {
+                print(" email exsist")
+                return
+            }else{
+                self.RegisterUser()
+               
+              
+                
+            }
+        }
+            
+        }
+       
     }
     
     @IBAction func TakeImageBtnPressed(_ sender: UIButton) {
         presentPhotoActionSheet()
+    }
+    
+    func  inserUserInDB() {
+        if let fname = FName.text,
+           let lname = LName.text,
+           let email = EmailOutlet.text {
+        let user = ChatAppUser(firstName: fname, lastName: lname, emailAddress: email)
+            DatabaseManger.shared.insertUser(with: user)
+            
+        }
+    }
+    
+    func RegisterUser(){
+        if let email = EmailOutlet.text,
+           let pass = passOutlet.text {
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: pass, completion: { authResult , error  in
+            guard let result = authResult, error == nil else {
+                print(error?.localizedDescription)
+                return
+            }
+            self.inserUserInDB()
+            let ConverVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
+                     self.navigationController?.pushViewController(ConverVC, animated: true)
+        })
+    }
     }
 }
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
