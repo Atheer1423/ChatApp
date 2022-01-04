@@ -90,6 +90,7 @@ class ChatViewController: MessagesViewController {
 //
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         messages.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("hello")))
         messages.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("hi")))
         messages.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("how are you")))

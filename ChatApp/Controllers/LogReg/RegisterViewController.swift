@@ -58,7 +58,25 @@ class RegisterViewController: UIViewController {
            let lname = LName.text,
            let email = EmailOutlet.text {
         let user = ChatAppUser(firstName: fname, lastName: lname, emailAddress: email)
-            DatabaseManger.shared.insertUser(with: user)
+            DatabaseManger.shared.insertUser(with: user, completion : {succes in
+                if succes {
+                    //upload image
+                    guard let image = self.imageOutlet.image,
+                            let data = image.pngData() else{
+                        return
+                    }
+                    let filename = user.profilePictureFileName
+                    StorageManager.shared.uploadProfilePicture(with: data, fileName: filename) { result   in
+                        switch result {
+                        case .success(let downloadUrl):
+                            UserDefaults.standard.set(downloadUrl,forKey: " profile_pic_url")
+                            print(downloadUrl)
+                        case .failure(let error):
+                            print("Storage manager error: \(error)")
+                        }
+                    }
+                }
+            })
             
         }
     }
@@ -72,8 +90,12 @@ class RegisterViewController: UIViewController {
                 return
             }
             self.inserUserInDB()
-            let ConverVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
-                     self.navigationController?.pushViewController(ConverVC, animated: true)
+            let ConverVC = ConversationViewController()
+            let nav = UINavigationController(rootViewController: ConverVC)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav,animated: true)
+//            self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
+//                     self.navigationController?.pushViewController(ConverVC, animated: true)
         })
     }
     }

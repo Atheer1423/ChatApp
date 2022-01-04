@@ -56,8 +56,15 @@ class LogInViewController: UIViewController {
                 return
             }
             let user = result.user
-            let ConverVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
-            self.navigationController?.pushViewController(ConverVC, animated: true)
+            
+            UserDefaults.standard.set(email, forKey:"email")
+         
+            let ConverVC = ConversationViewController()
+            let nav = UINavigationController(rootViewController: ConverVC)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav,animated: true)
+//            let ConverVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
+//            self.navigationController?.pushViewController(ConverVC, animated: true)
         })
         }
     }

@@ -29,6 +29,7 @@ class ConversationViewController: UIViewController {
             label.font = .systemFont(ofSize: 21, weight: .medium)
             return label
         }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -72,8 +73,12 @@ class ConversationViewController: UIViewController {
         // current user is set automatically when you log a user in
         if FirebaseAuth.Auth.auth().currentUser == nil {
             // present login view controller
-            let loginVC = storyboard?.instantiateViewController(withIdentifier: String(describing: LogInViewController.self)) as! LogInViewController
-            self.navigationController?.pushViewController(loginVC, animated: true)
+            let loginVC = LogInViewController()
+            let nav = UINavigationController(rootViewController: loginVC)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav,animated: true)
+//            storyboard?.instantiateViewController(withIdentifier: String(describing: LogInViewController.self)) as! LogInViewController
+//            self.navigationController?.pushViewController(loginVC, animated: true)
         }
     }
     
@@ -96,8 +101,9 @@ class ConversationViewController: UIViewController {
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
 
-            let ChatVC = storyboard?.instantiateViewController(withIdentifier: String(describing: ChatViewController.self)) as! ChatViewController
+            let ChatVC = ChatViewController()
             ChatVC.title =  "Atheer"
+            ChatVC.navigationItem.largeTitleDisplayMode = .never
             self.navigationController?.pushViewController(ChatVC, animated: true)
         }
     }
