@@ -32,15 +32,17 @@ class ConversationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         tableView.delegate = self
         tableView.dataSource = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose , target: self, action: #selector(didTapComposeButton))
-               view.addSubview(tableView)
-               view.addSubview(noConversationsLabel)
-    
-               fetchConversations()
+        view.addSubview(tableView)
+        view.addSubview(noConversationsLabel)
+        
+        fetchConversations()
     }
+    
     @objc private func didTapComposeButton(){
            // present new conversation view controller
            // present in a nav controller
@@ -51,13 +53,14 @@ class ConversationViewController: UIViewController {
     
     private func fetchConversations(){
             // fetch from firebase and either show table or label
-            
+
             tableView.isHidden = false
         }
        
        override func viewDidLayoutSubviews() {
            super.viewDidLayoutSubviews()
            tableView.frame = view.bounds
+
        }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,18 +70,19 @@ class ConversationViewController: UIViewController {
 //         self.navigationController?.pushViewController(ConverVC, animated: true)
 //     }
         validateAuth()
-            
+     
     }
     private func validateAuth(){
         // current user is set automatically when you log a user in
         if FirebaseAuth.Auth.auth().currentUser == nil {
             // present login view controller
-            let loginVC = LogInViewController()
-            let nav = UINavigationController(rootViewController: loginVC)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav,animated: true)
-//            storyboard?.instantiateViewController(withIdentifier: String(describing: LogInViewController.self)) as! LogInViewController
-//            self.navigationController?.pushViewController(loginVC, animated: true)
+//            let loginVC = LogInViewController()
+//            let nav = UINavigationController(rootViewController: loginVC)
+//            nav.modalPresentationStyle = .fullScreen
+//            present(nav,animated: true)
+
+            let loginVC =   storyboard?.instantiateViewController(withIdentifier: String(describing: LogInViewController.self)) as! LogInViewController
+            self.navigationController?.pushViewController(loginVC, animated: true)
         }
     }
     

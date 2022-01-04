@@ -18,13 +18,11 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var imageOutlet: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-      
-       
+  
     }
     
     override func viewWillAppear(_ animated: Bool) {
-      
+     
       
     }
     @IBAction func RegisterButnPressed(_ sender: UIButton) {

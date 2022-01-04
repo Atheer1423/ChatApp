@@ -25,11 +25,12 @@ class LogInViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        loginUser()
-        
+       
+        if imageView != nil {
         imageView.kf.setImage(with:URL(string:"https://download.logo.wine/logo/Facebook_Messenger/Facebook_Messenger-Logo.wine.png"))
         
-      
+        }
+
         
     }
     @IBAction func logInBtnPressed(_ sender: UIButton) {
@@ -55,7 +56,7 @@ class LogInViewController: UIViewController {
                 print("Failed to log in user with email \(email)")
                 return
             }
-            let user = result.user
+            var user  = result.user
             
             UserDefaults.standard.set(email, forKey:"email")
          
@@ -63,8 +64,7 @@ class LogInViewController: UIViewController {
             let nav = UINavigationController(rootViewController: ConverVC)
             nav.modalPresentationStyle = .fullScreen
             self.present(nav,animated: true)
-//            let ConverVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
-//            self.navigationController?.pushViewController(ConverVC, animated: true)
+          
         })
         }
     }

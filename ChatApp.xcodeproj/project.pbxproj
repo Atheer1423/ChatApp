@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		84570A4F277DE3060086E74E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84570A4E277DE3060086E74E /* AppDelegate.swift */; };
 		84570A51277DE3060086E74E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84570A50277DE3060086E74E /* SceneDelegate.swift */; };
-		84570A53277DE3060086E74E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84570A52277DE3060086E74E /* ViewController.swift */; };
 		84570A56277DE3060086E74E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84570A54277DE3060086E74E /* Main.storyboard */; };
 		84570A58277DE3070086E74E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84570A57277DE3070086E74E /* Assets.xcassets */; };
 		84570A5B277DE3070086E74E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84570A59277DE3070086E74E /* LaunchScreen.storyboard */; };
@@ -35,7 +34,6 @@
 		84570A4B277DE3060086E74E /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84570A4E277DE3060086E74E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84570A50277DE3060086E74E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		84570A52277DE3060086E74E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		84570A55277DE3060086E74E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84570A57277DE3070086E74E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84570A5A277DE3070086E74E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				84570A66277DE35E0086E74E /* LogReg */,
-				84570A52277DE3060086E74E /* ViewController.swift */,
 				84570A68277DE40A0086E74E /* ConversationViewController.swift */,
 				C340131227832E1600E2EE8E /* ChatViewController.swift */,
 				C3AC205427847A330044ED5E /* StorageManager.swift */,
@@ -243,7 +240,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84570A53277DE3060086E74E /* ViewController.swift in Sources */,
 				84570A6F277DE46B0086E74E /* NewConversationViewController.swift in Sources */,
 				C3AC205527847A330044ED5E /* StorageManager.swift in Sources */,
 				84570A4F277DE3060086E74E /* AppDelegate.swift in Sources */,

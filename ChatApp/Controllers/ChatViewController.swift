@@ -99,6 +99,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
 
+
     }
 //
     override func viewDidAppear(_ animated: Bool) {
