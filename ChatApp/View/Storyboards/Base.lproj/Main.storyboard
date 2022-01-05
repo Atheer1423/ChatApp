@@ -230,6 +230,7 @@
         <scene sceneID="ore-KI-XYC">
             <objects>
                 <tabBarController id="8lL-in-lLX" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="OVU-yy-O2S"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x2x-tw-Qff">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
