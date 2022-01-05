@@ -113,8 +113,8 @@
 				C340131227832E1600E2EE8E /* ChatViewController.swift */,
 				C3AC205427847A330044ED5E /* StorageManager.swift */,
 				84570A6E277DE46B0086E74E /* NewConversationViewController.swift */,
-				84570A70277DE4900086E74E /* ProfileViewController.swift */,
 				C34013092782F60A00E2EE8E /* DatabaseManger.swift */,
+				84570A70277DE4900086E74E /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
