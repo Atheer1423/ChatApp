@@ -56,9 +56,23 @@ class LogInViewController: UIViewController {
                 print("Failed to log in user with email \(email)")
                 return
             }
-            var user  = result.user
-            
+            let user = result.user
+            let safeEmail = DatabaseManger.safeEmail(emailAddress: email)
+            DatabaseManger.shared.getDataFor(path: safeEmail, completion: {result in
+                switch result {
+                case .success(let data):
+                    guard let userData = data as? [String:Any],
+                          let fName = userData["first_name"] as? String,
+                          let lName = userData["last_name"] as? String else {
+                              return
+                          }
+                    UserDefaults.standard.set("\(fName) \(lName)", forKey:"name")
+                case .failure(let error):
+                    print("failed to read data: \(error)")
+                }
+            })
             UserDefaults.standard.set(email, forKey:"email")
+          
          
             let ConverVC = ConversationViewController()
             let nav = UINavigationController(rootViewController: ConverVC)
