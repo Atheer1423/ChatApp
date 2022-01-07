@@ -519,12 +519,44 @@ extension DatabaseManger {
                              return
                          }
                          
-                         // update
-                         completion(true)
+                         // update latest  message for recipient user
+                         StrongSelf.database.child("\(OtherUserEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                             guard var  otherUserConversations = snapshot.value as? [[String:Any]] else {
+                                 completion(false)
+                                 return
+                             }
+                             let updatedValue : [String:Any] = [
+                                "date": dateString,
+                                "is_read": false,
+                                "message":message
+                             ]
+                             var targetConversation : [String:Any]?
+                             var position = 0
+                             for Oneconversation in otherUserConversations {
+                                 if let currentId = Oneconversation["id"] as? String , currentId == conversation {
+                                    targetConversation = Oneconversation
+                                     break
+                                 }
+                                 position += 1
+                             }
+                             targetConversation?["latest_message"] = updatedValue
+                             guard let TargetConversation = targetConversation else {
+                                 completion(false)
+                                 return
+                             }
+                             otherUserConversations[position] = TargetConversation
+                             StrongSelf.database.child("\(OtherUserEmail)/conversations").setValue(otherUserConversations, withCompletionBlock: { error, _ in
+                                 guard error == nil else{
+                                     completion(false)
+                                     return
+                                 }
+                                 completion(true)
+                             })
+                         })
+                       
                      })
                  })
           
-             completion(true)
              }
            })
            
