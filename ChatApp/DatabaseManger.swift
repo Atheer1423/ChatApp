@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseDatabase
+import MessageKit
+import UIKit
 final class DatabaseManger {
     
     static let shared = DatabaseManger()
@@ -409,8 +411,23 @@ extension DatabaseManger {
                                      return nil
                                      
                                  }
+                           var kind: MessageKind?
+                           if type == "photo" {
+                               guard let imageUrl = URL(string:content),
+                                     let placeholder = UIImage(systemName :"plus") else{
+                                         return nil
+                                     }
+                               let media = Media(url: imageUrl, image: nil, placeholderImage: placeholder, size: CGSize(width:300,height:300))
+                               kind = .photo(media)
+                           }else{
+                               kind = .text(content)
+                           }
+                           
+                           guard let finalKind = kind else {
+                               return nil
+                           }
                            let sender = Senderstruct(senderId: senderEmail, displayName: name, photurl: " ")
-                           return Message(sender: sender, messageId: messageId, sentDate: dateString, kind: .text(content))
+                           return Message(sender: sender, messageId: messageId, sentDate: dateString, kind: finalKind)
                      
                })
                completion(.success(messages))
@@ -447,7 +464,10 @@ extension DatabaseManger {
                              message = messageText
                          case .attributedText(_):
                              break
-                         case .photo(_):
+                         case .photo(let mediaItem):
+                             if let targetUrlString = mediaItem.url?.absoluteString {
+                             message = targetUrlString
+                         }
                              break
                          case .video(_):
                              break
