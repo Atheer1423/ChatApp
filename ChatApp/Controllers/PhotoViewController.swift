@@ -8,9 +8,9 @@
 import UIKit
 import MessageKit
 class PhotoViewController: UIViewController {
-
+    
     private let url : URL
-   
+    
     init (with url:URL){
         self.url = url
         super.init(nibName: nil, bundle: nil)
@@ -26,19 +26,19 @@ class PhotoViewController: UIViewController {
         return imageView
     }()
     
-   override func viewDidLoad(){
-       super.viewDidLoad()
-       title = "photo"
-       navigationItem.largeTitleDisplayMode = .never
-       view.backgroundColor = .black
-       view.addSubview(imageView)
-       imageView.kf.setImage(with:url)
-       
+    override func viewDidLoad(){
+        super.viewDidLoad()
+        title = "photo"
+        navigationItem.largeTitleDisplayMode = .never
+        view.backgroundColor = .black
+        view.addSubview(imageView)
+        imageView.kf.setImage(with:url)
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         imageView.frame = view.bounds
     }
-
+    
 }

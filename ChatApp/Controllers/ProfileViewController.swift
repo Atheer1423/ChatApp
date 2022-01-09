@@ -96,7 +96,9 @@ extension ProfileViewController : UITableViewDataSource, UITableViewDelegate {
                 
                 // present login view controller
                 let loginVC = strongSelf.storyboard?.instantiateViewController(withIdentifier: String(describing: LogInViewController.self)) as! LogInViewController
-                strongSelf.navigationController?.pushViewController(loginVC, animated: true)
+                loginVC.modalPresentationStyle = .fullScreen
+                
+                strongSelf.present(loginVC,animated: true)
             }
             catch {
                 print("failed to logout")

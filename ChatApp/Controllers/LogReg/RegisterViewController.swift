@@ -16,36 +16,26 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var LName: UITextField!
     @IBOutlet weak var FName: UITextField!
     @IBOutlet weak var imageOutlet: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-  
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-     
-      
-    }
     @IBAction func RegisterButnPressed(_ sender: UIButton) {
         if let email = EmailOutlet.text {
             spinner.show(in: view)
-        DatabaseManger.shared.userExists(with:email) { isExist in
-            DispatchQueue.main.async {
-                self.spinner.dismiss(animated: true)
-            }
-            if isExist {
-                print(" email exsist")
-                return
-            }else{
-                self.RegisterUser()
-               
-              
-                
-            }
-        }
-            
-        }
-       
-    }
+            DatabaseManger.shared.userExists(with:email) { isExist in
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
+                if isExist {
+                    print(" email exsist")
+                    return
+                }else{
+                    self.RegisterUser()
+                    
+                } }  } }
     
     @IBAction func TakeImageBtnPressed(_ sender: UIButton) {
         presentPhotoActionSheet()
@@ -55,14 +45,14 @@ class RegisterViewController: UIViewController {
         if let fname = FName.text,
            let lname = LName.text,
            let email = EmailOutlet.text {
-        let user = ChatAppUser(firstName: fname, lastName: lname, emailAddress: email)
+            let user = ChatAppUser(firstName: fname, lastName: lname, emailAddress: email)
             DatabaseManger.shared.insertUser(with: user, completion : {succes in
                 if succes {
                     //upload image
                     guard let image = self.imageOutlet.image,
-                            let data = image.pngData() else{
-                        return
-                    }
+                          let data = image.pngData() else{
+                              return
+                          }
                     let filename = user.profilePictureFileName
                     StorageManager.shared.uploadProfilePicture(with: data, fileName: filename) { result   in
                         switch result {
@@ -73,31 +63,26 @@ class RegisterViewController: UIViewController {
                             print("Storage manager error: \(error)")
                         }
                     }
-                }
-            })
-            
-        }
+                } })  }
+        let coverVC = storyboard?.instantiateViewController(withIdentifier: "TabbarViewController") as? UITabBarController
+        coverVC?.modalPresentationStyle = .fullScreen
+        dismiss(animated: true, completion: nil)
     }
     
     func RegisterUser(){
         if let email = EmailOutlet.text,
            let pass = passOutlet.text {
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: pass, completion: { authResult , error  in
-            guard let result = authResult, error == nil else {
-                print(error?.localizedDescription)
-                return
-            }
-            self.inserUserInDB()
-            let ConverVC = ConversationViewController()
-            let nav = UINavigationController(rootViewController: ConverVC)
-            nav.modalPresentationStyle = .fullScreen
-            self.present(nav,animated: true)
-//            self.storyboard?.instantiateViewController(withIdentifier: String(describing: ConversationViewController.self)) as! ConversationViewController
-//                     self.navigationController?.pushViewController(ConverVC, animated: true)
-        })
-    }
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: pass, completion: { authResult , error  in
+                guard let result = authResult, error == nil else {
+                    print(error?.localizedDescription)
+                    return
+                }
+                self.inserUserInDB()
+            })
+        }
     }
 }
+
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // get results of user taking picture or selecting from camera roll
     func presentPhotoActionSheet(){

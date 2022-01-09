@@ -8,7 +8,7 @@
 import UIKit
 import JGProgressHUD
 class NewConversationViewController: UIViewController {
-
+    
     public var completion : ((SearchResult) -> Void)?
     private  let spinner = JGProgressHUD(style: .dark)
     
@@ -17,14 +17,14 @@ class NewConversationViewController: UIViewController {
     private var hasFetched = false
     
     private let searchBar : UISearchBar = {
-      let searchBar = UISearchBar()
+        let searchBar = UISearchBar()
         searchBar.placeholder = " Search for users.."
         return searchBar
     }()
     
     private let tableView: UITableView = {
         let table = UITableView()
-//        table.isHidden = false
+        //        table.isHidden = false
         table.register(newConversationCell.self, forCellReuseIdentifier: newConversationCell.identifier)
         table.backgroundColor = .white
         return table
@@ -47,22 +47,22 @@ class NewConversationViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
-      
+        
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title:"Cancel", style: .done , target:self , action : #selector(dismissSelf))
-       
+        
         searchBar.resignFirstResponder()
     }
     override func viewDidLayoutSubviews() {
         tableView.frame = view.bounds
         
         labelNoResults.frame = CGRect(x: view.frame.width/4, y: (view.frame.height-200)/2, width: (view.frame.width
-                                      )/2, height: 200)
-
+                                                                                                  )/2, height: 200)
+        
     }
     @objc func dismissSelf()  {
-          dismiss(animated: true, completion: nil)
-      }
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension NewConversationViewController : UITableViewDelegate,UITableViewDataSource {
@@ -84,7 +84,7 @@ extension NewConversationViewController : UITableViewDelegate,UITableViewDataSou
         dismiss(animated: true, completion: { [ weak self] in
             self?.completion?(targetUserData)
         })
-     
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -111,7 +111,7 @@ extension NewConversationViewController :UISearchBarDelegate {
             //filter
             filterUsers(term: query)
         }else{
-           // fetch then filter
+            // fetch then filter
             DatabaseManger.shared.getAllUsers(completion: { [ weak self] result in
                 switch result {
                 case .success(let userCollection):
@@ -129,8 +129,8 @@ extension NewConversationViewController :UISearchBarDelegate {
         //update ui : show results or show - no resuls
         guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String,
               hasFetched else {
-            return
-        }
+                  return
+              }
         let safeEmail = DatabaseManger.safeEmail(emailAddress: currentUserEmail)
         self.spinner.dismiss()
         
@@ -144,9 +144,9 @@ extension NewConversationViewController :UISearchBarDelegate {
             return name.hasPrefix(term.lowercased())
         }).compactMap({
             guard let email = $0["email"] ,
-            let name = $0["name"]  else {
-                return nil
-            }
+                  let name = $0["name"]  else {
+                      return nil
+                  }
             return SearchResult(name: name, email: email)
             
         })
@@ -154,7 +154,7 @@ extension NewConversationViewController :UISearchBarDelegate {
         
         updateUI()
         
-      
+        
     }
     
     func updateUI (){
